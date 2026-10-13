@@ -1,0 +1,586 @@
+{
+  "_comments": {
+    "source": "forts_future (фьючерс ФОРТС, цена из securities+marketdata по ASSETCODE) | moex_spot (валютный спот: marketdata по SECID) | fx (форекс, вручную)",
+    "moex_code": "для forts_future — ASSETCODE (SI/EU/ED/UCNY/CNY/GOLD); для moex_spot — SECID инструмента TOM на валютном рынке",
+    "mult": "множитель для P&L: сколько единиц счёта даёт шаг цены 1.0 по контракту/лоту",
+    "cur": "валюта расчёта P&L: rub | usd"
+  },
+  "tickers": {
+    "SI1!": {
+      "name": "Si (USD/RUB, фьючерс)",
+      "source": "forts_future",
+      "moex_code": "SI",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:SI1!"
+    },
+    "CR1!": {
+      "name": "Cr (CNY/RUB, фьючерс)",
+      "source": "forts_future",
+      "moex_code": "CNY",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:CR1!"
+    },
+    "EU1!": {
+      "name": "Eu (EUR/RUB, фьючерс)",
+      "source": "forts_future",
+      "moex_code": "EU",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:EU1!"
+    },
+    "ED1!": {
+      "name": "Ed (EUR/USD, фьючерс)",
+      "source": "forts_future",
+      "moex_code": "ED",
+      "mult": 1000,
+      "cur": "usd",
+      "tv": "RUS:ED1!"
+    },
+    "UC1!": {
+      "name": "Uc (USD/CNY, фьючерс)",
+      "source": "forts_future",
+      "moex_code": "UCNY",
+      "mult": 1000,
+      "cur": "usd",
+      "tv": "RUS:UC1!"
+    },
+    "GD1": {
+      "name": "GD1 (золото, MOEX)",
+      "source": "forts_future",
+      "moex_code": "GOLD",
+      "mult": 1,
+      "cur": "rub",
+      "tv": "SPFB:GD1"
+    },
+    "GD2": {
+      "name": "GD2 (золото, MOEX)",
+      "source": "forts_future",
+      "moex_code": "GOLD",
+      "mult": 1,
+      "cur": "rub",
+      "tv": "SPFB:GD2"
+    },
+    "EURRUB.P": {
+      "name": "EUR/RUB спот",
+      "source": "moex_spot",
+      "moex_code": "EUR_RUB__TOM",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:EURRUB.P"
+    },
+    "USDRUB.P": {
+      "name": "USD/RUB спот",
+      "source": "moex_spot",
+      "moex_code": "USD000UTSTOM",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:USDRUB.P"
+    },
+    "CNYRUB.P": {
+      "name": "CNY/RUB спот",
+      "source": "moex_spot",
+      "moex_code": "CNYRUB_TOM",
+      "mult": 1000,
+      "cur": "rub",
+      "tv": "RUS:CNYRUB.P"
+    },
+    "USDCNH": {
+      "name": "USD/CNH (форекс)",
+      "source": "fx",
+      "mult": 1,
+      "cur": "usd",
+      "tv": "OANDA:USDCNH"
+    },
+    "EURUSD": {
+      "name": "EUR/USD (форекс)",
+      "source": "fx",
+      "mult": 1,
+      "cur": "usd",
+      "tv": "OANDA:EURUSD"
+    },
+    "EURCNH": {
+      "name": "EUR/CNH (форекс)",
+      "source": "fx",
+      "mult": 1,
+      "cur": "usd",
+      "tv": "FOREXCOM:EURCNH"
+    },
+    "USDCNY": {
+      "name": "USD/CNY (форекс)",
+      "source": "fx",
+      "mult": 1,
+      "cur": "usd",
+      "tv": "OANDA:USDCNY"
+    },
+    "XAUUSD": {
+      "name": "XAU/USD (форекс)",
+      "source": "fx",
+      "mult": 100,
+      "cur": "usd",
+      "tv": "OANDA:XAUUSD"
+    }
+  },
+  "deal_types": [
+    {
+      "id": "UC1/USDCNH",
+      "title": "UC1/USDCNH",
+      "formula": "(RUS:UC1!/OANDA:USDCNH-1)*100",
+      "legs": [
+        {
+          "key": "UC1",
+          "ticker": "UC1!",
+          "title": "UC1 (USD/CNY)",
+          "source": "forts_future",
+          "moex_code": "UCNY",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "USDCNH",
+          "ticker": "USDCNH",
+          "title": "USD/CNH",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "CNH"
+        }
+      ],
+      "ratio": {
+        "num": "UC1",
+        "den": "USDCNH",
+        "formula": "(UC1/USDCNH-1)*100"
+      }
+    },
+    {
+      "id": "Si/Cr/USDCNH",
+      "title": "Si/Cr/USDCNH",
+      "formula": "(RUS:SI1!/RUS:CR1!/1000/OANDA:USDCNH-1)*100",
+      "legs": [
+        {
+          "key": "SI1",
+          "ticker": "SI1!",
+          "title": "Si (USD/RUB)",
+          "source": "forts_future",
+          "moex_code": "SI",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "CR1",
+          "ticker": "CR1!",
+          "title": "Cr (CNY/RUB)",
+          "source": "forts_future",
+          "moex_code": "CNY",
+          "defaultSide": "sell",
+          "div": 1000,
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "USDCNH",
+          "ticker": "USDCNH",
+          "title": "USD/CNH",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "CNH"
+        }
+      ]
+    },
+    {
+      "id": "ED1/EURUSD",
+      "title": "ED1/EURUSD",
+      "formula": "(RUS:ED1!/OANDA:EURUSD-1)*100",
+      "legs": [
+        {
+          "key": "ED1",
+          "ticker": "ED1!",
+          "title": "Ed (EUR/USD)",
+          "source": "forts_future",
+          "moex_code": "ED",
+          "defaultSide": "buy",
+          "mult": 10000,
+          "decimals": 4
+        },
+        {
+          "key": "EURUSD",
+          "ticker": "EURUSD",
+          "title": "EUR/USD",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "USD"
+        }
+      ]
+    },
+    {
+      "id": "EU1/Si1/EURUSD",
+      "title": "EU1/Si1/EURUSD",
+      "formula": "(RUS:EU1!/RUS:SI1!/OANDA:EURUSD-1)*100",
+      "legs": [
+        {
+          "key": "EU1",
+          "ticker": "EU1!",
+          "title": "Eu (EUR/RUB)",
+          "source": "forts_future",
+          "moex_code": "EU",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "SI1",
+          "ticker": "SI1!",
+          "title": "Si (USD/RUB)",
+          "source": "forts_future",
+          "moex_code": "SI",
+          "defaultSide": "sell",
+          "unit": "USD",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "EURUSD",
+          "ticker": "EURUSD",
+          "title": "EUR/USD",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "USD"
+        }
+      ]
+    },
+    {
+      "id": "EU1/CR1/EURCNH",
+      "title": "EU1/CR1/EURCNH",
+      "formula": "(RUS:EU1!/RUS:CR1!/FOREXCOM:EURCNH-1)*100",
+      "legs": [
+        {
+          "key": "EU1",
+          "ticker": "EU1!",
+          "title": "Eu (EUR/RUB)",
+          "source": "forts_future",
+          "moex_code": "EU",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "CR1",
+          "ticker": "CR1!",
+          "title": "Cr (CNY/RUB)",
+          "source": "forts_future",
+          "moex_code": "CNY",
+          "defaultSide": "sell",
+          "div": 1000,
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "EURCNH",
+          "ticker": "EURCNH",
+          "title": "EUR/CNH",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "CNH"
+        }
+      ]
+    },
+    {
+      "id": "EUR/CNY/EURCNH",
+      "title": "EUR/CNY/EURCNH",
+      "formula": "(RUS:EURRUB.P/RUS:CNYRUB.P/FOREXCOM:EURCNH-1)*100",
+      "legs": [
+        {
+          "key": "EURRUB",
+          "ticker": "EURRUB.P",
+          "title": "EUR/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "EUR_RUB__TOM",
+          "defaultSide": "buy"
+        },
+        {
+          "key": "CNYRUB",
+          "ticker": "CNYRUB.P",
+          "title": "CNY/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "CNYRUB_TOM",
+          "defaultSide": "sell"
+        },
+        {
+          "key": "EURCNH",
+          "ticker": "EURCNH",
+          "title": "EUR/CNH",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "CNH"
+        }
+      ]
+    },
+    {
+      "id": "USD/CNY/USDCNY",
+      "title": "USD/CNY/USDCNY",
+      "formula": "(RUS:USDRUB.P/RUS:CNYRUB.P/OANDA:USDCNH-1)*100",
+      "legs": [
+        {
+          "key": "USDRUB",
+          "ticker": "USDRUB.P",
+          "title": "USD/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "USD000UTSTOM",
+          "defaultSide": "buy"
+        },
+        {
+          "key": "CNYRUB",
+          "ticker": "CNYRUB.P",
+          "title": "CNY/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "CNYRUB_TOM",
+          "defaultSide": "sell"
+        },
+        {
+          "key": "USDCNY",
+          "ticker": "USDCNY",
+          "title": "USD/CNY",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "CNY"
+        }
+      ]
+    },
+    {
+      "id": "EUR/USD/EURUSD",
+      "title": "EUR/USD/EURUSD",
+      "formula": "(RUS:EURRUB.P/RUS:USDRUB.P/OANDA:EURUSD-1)*100",
+      "legs": [
+        {
+          "key": "EURRUB",
+          "ticker": "EURRUB.P",
+          "title": "EUR/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "EUR_RUB__TOM",
+          "defaultSide": "buy"
+        },
+        {
+          "key": "USDRUB",
+          "ticker": "USDRUB.P",
+          "title": "USD/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "USD000UTSTOM",
+          "defaultSide": "sell"
+        },
+        {
+          "key": "EURUSD",
+          "ticker": "EURUSD",
+          "title": "EUR/USD",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "USD"
+        }
+      ]
+    },
+    {
+      "id": "CNY/CR",
+      "title": "CNY/CR",
+      "formula": "(RUS:CNYRUB.P/RUS:CR1!*100-1)*100",
+      "legs": [
+        {
+          "key": "CNYRUB",
+          "ticker": "CNYRUB.P",
+          "title": "CNY/RUB спот",
+          "source": "moex_spot",
+          "moex_code": "CNYRUB_TOM",
+          "defaultSide": "buy"
+        },
+        {
+          "key": "CR1",
+          "ticker": "CR1!",
+          "title": "Cr (CNY/RUB)",
+          "source": "forts_future",
+          "moex_code": "CNY",
+          "defaultSide": "sell",
+          "mult": 1,
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "Si/Cr/UC",
+      "title": "Si/Cr/UC",
+      "formula": "(RUS:SI1!/RUS:CR1!/RUS:UC1!-1)*100",
+      "legs": [
+        {
+          "key": "SI1",
+          "ticker": "SI1!",
+          "title": "Si (USD/RUB)",
+          "source": "forts_future",
+          "moex_code": "SI",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "CR1",
+          "ticker": "CR1!",
+          "title": "Cr (CNY/RUB)",
+          "source": "forts_future",
+          "moex_code": "CNY",
+          "defaultSide": "sell",
+          "div": 1000,
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "UC1",
+          "ticker": "UC1!",
+          "title": "Uc (USD/CNY)",
+          "source": "forts_future",
+          "moex_code": "UCNY",
+          "defaultSide": "sell",
+          "unit": "CNY",
+          "mult": 1,
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "Eu/Si/ED",
+      "title": "Eu/Si/ED",
+      "formula": "(RUS:EU1!/RUS:SI1!/RUS:ED1!-1)*100",
+      "legs": [
+        {
+          "key": "EU1",
+          "ticker": "EU1!",
+          "title": "Eu (EUR/RUB)",
+          "source": "forts_future",
+          "moex_code": "EU",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "SI1",
+          "ticker": "SI1!",
+          "title": "Si (USD/RUB)",
+          "source": "forts_future",
+          "moex_code": "SI",
+          "defaultSide": "sell",
+          "unit": "USD",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "ED1",
+          "ticker": "ED1!",
+          "title": "Ed (EUR/USD)",
+          "source": "forts_future",
+          "moex_code": "ED",
+          "defaultSide": "sell",
+          "unit": "USD",
+          "mult": 10000,
+          "decimals": 4
+        }
+      ]
+    },
+    {
+      "id": "Si1/USDR",
+      "title": "Si1/USDR",
+      "formula": "si1!/usdrubf — базис (Si-9.26 vs вечный USDRUBF)",
+      "ratio": {
+        "num": "SI1",
+        "den": "USDRUBF",
+        "formula": "((SI1/USDRUBF-1)*100+100)/1000"
+      },
+      "legs": [
+        {
+          "key": "SI1",
+          "ticker": "SI1!",
+          "title": "Si (USD/RUB, фьючерс)",
+          "source": "forts_future",
+          "moex_code": "SI",
+          "defaultSide": "buy",
+          "mult": 10,
+          "decimals": 0
+        },
+        {
+          "key": "USDRUBF",
+          "ticker": "USDRUBF",
+          "title": "USDRUBF (вечный USD/RUB)",
+          "source": "forts_future",
+          "moex_code": "USDRUBF",
+          "defaultSide": "sell",
+          "mult": 1000,
+          "decimals": 2
+        }
+      ]
+    },
+    {
+      "id": "GD1/XAU",
+      "title": "GD1/XAU — золото (MOEX + форекс)",
+      "formula": "GD1/GD2 (MOEX) vs XAUUSD (форекс)",
+      "legs": [
+        {
+          "key": "GD1",
+          "ticker": "GD1",
+          "title": "GD1 (золото, MOEX)",
+          "source": "forts_future",
+          "moex_code": "GOLD",
+          "defaultSide": "buy",
+          "unit": "oz",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "GD2",
+          "ticker": "GD2",
+          "title": "GD2 (золото, MOEX)",
+          "source": "forts_future",
+          "moex_code": "GOLD",
+          "defaultSide": "buy",
+          "unit": "oz",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "XAUUSD",
+          "ticker": "XAUUSD",
+          "title": "XAU/USD (форекс)",
+          "source": "fx",
+          "defaultSide": "sell",
+          "mult": 100,
+          "unit": "oz"
+        }
+      ]
+    },
+    {
+      "id": "GD1/XAUUSD",
+      "title": "GD1/XAUUSD",
+      "formula": "(RUS:GD1!/OANDA:XAUUSD-1)*100",
+      "legs": [
+        {
+          "key": "GD1",
+          "ticker": "GD1",
+          "title": "GD1 (золото, MOEX)",
+          "source": "forts_future",
+          "moex_code": "GOLD",
+          "defaultSide": "buy",
+          "mult": 1,
+          "decimals": 0
+        },
+        {
+          "key": "XAUUSD",
+          "ticker": "XAUUSD",
+          "title": "XAU/USD",
+          "source": "fx",
+          "defaultSide": "sell",
+          "unit": "USD"
+        }
+      ],
+      "ratio": {
+        "num": "GD1",
+        "den": "XAUUSD",
+        "formula": "(GD1/XAUUSD-1)*100"
+      }
+    }
+  ]
+}

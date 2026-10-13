@@ -1,0 +1,43 @@
+{
+  "name": "moex-mini",
+  "version": "1.0.0",
+  "description": "Мини-приложение MOEX Forex — компактное окно поверх других. Отображение информации без сделок.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "ru.moex.mini",
+    "productName": "MOEX Mini",
+    "files": [
+      "main.js",
+      "preload.js",
+      "styles.css"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "MOEX-Mini-${version}.exe"
+    },
+    "electronLanguages": [
+      "ru"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "allowScripts": {
+    "electron@33.4.11": true
+  }
+}

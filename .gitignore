@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+
+# конфигурация с секретами — создаётся из config.example.json
+config.json
+
+# лог запуска
+app.log
+
+# данные и кэши, создаются при работе (содержат личные данные)
+balance_history.json
+deals.json
+td_cookies.txt
+.ct_cache.json
+.fund_cache.json
+.lk_cache.json
+.usd_cache.json
+
+# desktop app deps
+win-app/node_modules/
+win-app/dist/

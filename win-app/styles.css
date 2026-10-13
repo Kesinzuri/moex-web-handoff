@@ -1,0 +1,53 @@
+/* MOEX Mini — компактная тема поверх встроенной */
+html, body { padding: 0 !important; }
+body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background:#0d1117 !important; }
+
+/* ~66px frameless drag-бар сверху */
+#mini-bar {
+  -webkit-app-region: drag;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+  height: 34px; padding: 0 8px;
+  background: #0d1117; border-bottom: 1px solid #1f2a3d;
+  user-select: none; flex-shrink: 0;
+}
+#mini-bar .mini-title {
+  margin-right: auto; font-size: 11px; color: #8b949e; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#mini-bar .mb {
+  -webkit-app-region: no-drag;
+  width: 26px; height: 26px; border: none; border-radius: 6px;
+  background: #161d2b; color: #8b949e; font-size: 13px; line-height: 1;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+#mini-bar .mb:hover { color: #e6edf3; background: #1f2a3d; }
+#mini-bar .mb.pinned { color: #3fb950; background: #12261e; }
+#mini-bar .mb.quit:hover { color: #fff; background: #a03636; }
+
+/* контент компактнее */
+.header { display: none; }                    /* крупная шапка не нужна */
+#mini-bar { display: flex; }
+.tabs { margin: 10px 10px 8px !important; gap: 6px !important; }
+.tab { padding: 5px 12px !important; font-size: 12px !important; border-radius: 6px !important; }
+#err { margin: 0 10px !important; }
+#card, .lk, .ct, #lk-panes, #ct-panes, #deals-wrap { margin-left: 10px !important; margin-right: 10px !important; }
+
+.card { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
+.item { padding: 8px 10px !important; }
+.item .val { font-size: 18px !important; }
+
+.stats { grid-template-columns: repeat(2, 1fr) !important; }
+.stat { padding: 8px 10px !important; }
+.stat .v { font-size: 15px !important; }
+
+.posacc h3 { font-size: 12px !important; }
+.posacc, .ct { padding: 8px 10px !important; }
+.grphead { padding: 4px 8px !important; font-size: 11px !important; gap: 10px !important; }
+.grpblock .ops table, .ct .ops table { min-width: 0 !important; }
+.grpblock .ops th, .grpblock .ops td, .ct .ops th, .ct .ops td { font-size: 11px !important; padding: 3px 4px !important; }
+
+footer { display: none; }
+
+/* подгонка: фандинг-таблица */
+.fund-table th, .fund-table td { font-size: 11px !important; }
